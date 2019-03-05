@@ -79,7 +79,7 @@ public class DocumentIdReader extends Observable<Object> {
         if (idValue != null) {
             // find the first _id of a few batches prior to given idValue
             Document idValueFromPriorBatches = collection
-                    .find(Filters.lte("_id", idValue.get("latest_id")))
+                    .find(Filters.lt("_id", idValue.get("latest_id")))
                     .sort(BsonDocument.parse("{_id: -1}")) // descending order
                     .skip((MigratorSettings.BATCHES_MAX_COUNT + 1) * MigratorSettings.BATCH_SIZE_ID_READER) // excess just in case
                     .limit(1)
